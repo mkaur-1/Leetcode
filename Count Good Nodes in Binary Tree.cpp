@@ -11,18 +11,19 @@
  */
 class Solution {
 public:
-    int rec(struct TreeNode* root, int max_val) {
-        if (!root)
+ int treechild(TreeNode *root,int p)
+    {
+        if(root==NULL)
             return 0;
-        max_val = max(max_val, root->val);
-        if (root->val >= max_val)
-            return 1 + rec(root->right, max_val) + rec(root->left, max_val);
+        if(p<=root->val)
+            return 1 + treechild(root->right,max(p,root->val)) + treechild(root->left,max(p,root->val));
         else
-            return rec(root->right, max_val) + rec(root->left, max_val);
+            return treechild(root->right,max(p,root->val)) + treechild(root->left,max(p,root->val));
     }
-    
     int goodNodes(TreeNode* root) {
-        if (!root) return 0;
-        return rec(root, root->val);
+        int count = 1;
+        count = count + treechild(root->left,root->val) + treechild(root->right,root->val);
+        return count ;
+        
     }
 };
