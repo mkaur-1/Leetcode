@@ -1,20 +1,26 @@
 class Solution {
 public:
-    void setZeroes(vector<vector<int>>& matrix) {
-        int col0 = 1, rows = matrix.size(), cols = matrix[0].size();
-
-    for (int i = 0; i < rows; i++) {
-        if (matrix[i][0] == 0) col0 = 0;
-        for (int j = 1; j < cols; j++)
-            if (matrix[i][j] == 0)
-                matrix[i][0] = matrix[0][j] = 0;
-    }
-
-    for (int i = rows - 1; i >= 0; i--) {
-        for (int j = cols - 1; j >= 1; j--)
-            if (matrix[i][0] == 0 || matrix[0][j] == 0)
-                matrix[i][j] = 0;
-        if (col0 == 0) matrix[i][0] = 0;
-    }
+    void setZeroes(vector<vector<int>>& arr) {
+        set <int> rows,cols;
+        int r = (int)arr.size(),c = (int)arr[0].size();
+        for(int i=0;i<r;i++){
+            for(int j=0;j<c;j++){
+                if(arr[i][j]==0){
+                    rows.insert(i);
+                    cols.insert(j);
+                }
+            }
+        }        
+        for(int i=0;i<r;i++){
+            if(rows.find(i)!=rows.end()){
+                vector <int> vec(c,0);
+                arr[i] = vec;
+            }
+        }
+        for(int x : cols){
+            for(int i=0;i<r;i++){
+                arr[i][x] = 0;                
+            }
+        }
     }
 };
